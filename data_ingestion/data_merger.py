@@ -1,17 +1,21 @@
 from data_ingestion import data_loader
+from application_logging import logger
 
 class DataMerger:
     def __init__(self):
-        json_data = data_loader.Data_Getter('')
+        json_data = data_loader.Data_Getter()
         self.customer_transaction_info = json_data.json_load('data/customer_transaction_info.json')
         self.customers_info = json_data.json_load('data/customers_info.json')
         self.orders_returned_info = json_data.json_load('data/orders_returned_info.json')
         self.product_info = json_data.json_load('data/product_info.json')
         self.region_seller_info = json_data.json_load('data/region_seller_info.json')
+        self.file_object = open("prediction_logs/prediction_log.txt", 'a+')
+        self.log_writer = logger.App_Logger()
         
 
     def dataframe_merger(self):
         try:
+            self.log_writer.log(self.file_object,'Start merging dataframe...!!')
             # Merging all dataframe into on dataframe.
             df = self.customer_transaction_info.merge(self.customers_info, on ='Customer ID', how= 'left')
             new_df = df.merge(self.orders_returned_info, on='Order ID', how= 'left')
@@ -19,6 +23,7 @@ class DataMerger:
 
             # Filtering data based on printer and Machines
             filter_df = final_df[(final_df['Product Name'].str.contains('Printer')) & (final_df['Sub-Category'] == 'Machines')]
+            self.log_writer.log(self.file_object,'All dataframes are merged into one dataframe...!!')
             return filter_df
 
         except Exception as ex:

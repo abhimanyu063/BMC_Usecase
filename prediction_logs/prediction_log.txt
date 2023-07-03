@@ -1,0 +1,65 @@
+2023-07-03/23:49:06		Start loading json file...!!
+2023-07-03/23:49:06		Loaded json file - customer_transaction_info.json
+2023-07-03/23:49:06		Start loading json file...!!
+2023-07-03/23:49:06		Loaded json file - customers_info.json
+2023-07-03/23:49:06		Start loading json file...!!
+2023-07-03/23:49:06		Loaded json file - orders_returned_info.json
+2023-07-03/23:49:06		Start loading json file...!!
+2023-07-03/23:49:06		Loaded json file - product_info.json
+2023-07-03/23:49:06		Start loading json file...!!
+2023-07-03/23:49:06		Loaded json file - region_seller_info.json
+2023-07-03/23:49:06		Start merging dataframe...!!
+2023-07-03/23:49:06		All dataframes are merged into one dataframe...!!
+2023-07-03/23:49:06		Start data preprocessing...!!
+2023-07-03/23:49:06		End data preprocessing...!!
+2023-07-03/23:49:06		Start encoding categorical features...!!
+2023-07-03/23:49:06		Start dropping features...!!
+2023-07-03/23:49:06		Droped features...!!
+2023-07-03/23:49:06		End encoding categorical features...!!
+2023-07-03/23:49:06		Start spliting features as X and y...!!
+2023-07-03/23:49:06		End spliting features as X and y...!!
+2023-07-03/23:49:06		Start features selection based on ExtraTreesClassifier...!!
+2023-07-03/23:49:06		End features selection based on ExtraTreesClassifier...!!
+2023-07-03/23:49:06		Start features selection based on RandomForestClassifier...!!
+2023-07-03/23:49:06		End features selection based on RandomForestClassifier...!!
+2023-07-03/23:49:06		Start feature dropping which is not relevant to model...!!
+2023-07-03/23:49:06		Dropped features which is not relevant to model
+2023-07-03/23:49:06		Start model training...!!
+2023-07-03/23:49:06		End model training...!!
+2023-07-03/23:49:06		Start StandardScaler...!!
+2023-07-03/23:49:06		End StandardScaler...!!
+2023-07-03/23:49:06		Start KFold cross validation...!!
+2023-07-03/23:49:06		End KFold cross validation...!!
+2023-07-03/23:49:06		Start building LogisticRegression model...!!
+2023-07-03/23:49:06		End building LogisticRegression model with classification_report               precision    recall  f1-score   support
+
+           0       0.89      0.99      0.94       370
+           1       0.71      0.10      0.17        52
+
+    accuracy                           0.88       422
+   macro avg       0.80      0.55      0.55       422
+weighted avg       0.87      0.88      0.84       422
+
+2023-07-03/23:49:06		Start building RandomForestClassifier model...!!
+2023-07-03/23:49:07		End building RandomForestClassifier model with classification_report               precision    recall  f1-score   support
+
+           0       0.89      0.99      0.94       370
+           1       0.71      0.10      0.17        52
+
+    accuracy                           0.88       422
+   macro avg       0.80      0.55      0.55       422
+weighted avg       0.87      0.88      0.84       422
+
+2023-07-03/23:49:07		Start building XGBClassifier model...!!
+2023-07-03/23:49:09		End building XGBClassifier model with classification_report               precision    recall  f1-score   support
+
+           0       0.99      0.99      0.99       370
+           1       0.91      0.96      0.93        52
+
+    accuracy                           0.98       422
+   macro avg       0.95      0.97      0.96       422
+weighted avg       0.98      0.98      0.98       422
+
+2023-07-03/23:49:09		Logistic Regression, AUC= 0.7155
+2023-07-03/23:49:09		XGBClassifier, AUC= 0.9835
+2023-07-03/23:49:09		RandomForestClassifier, AUC= 1.0

@@ -1,15 +1,20 @@
 from data_preprocessing import preprocessing
+from application_logging import logger
 
 class FeatureEngineering:
     def __init__(self) -> None:
         objDataPrepro = preprocessing.DataPreprocessing()
         self.final_dataFrame = objDataPrepro.preprocessing()
+        self.file_object = open("prediction_logs/prediction_log.txt", 'a+')
+        self.log_writer = logger.App_Logger()
 
     def __droping_feature(self):
         try:
+            self.log_writer.log(self.file_object,'Start dropping features...!!')
             drop_cols = ['Order ID', 'Order Date', 'Ship Date', 'Customer ID',
                          'Product ID', 'Customer Name', 'Postal Code']
             self.final_dataFrame.drop(columns= drop_cols, axis= 1, inplace= True)
+            self.log_writer.log(self.file_object,'Droped features...!!')
             return self.final_dataFrame
 
         except Exception as ex:
@@ -17,6 +22,7 @@ class FeatureEngineering:
 
     def _encode_categorical_columns(self):
         try:
+            self.log_writer.log(self.file_object,'Start encoding categorical features...!!')
             self.encoding_cat_feature = self.__droping_feature()
             self.encoding_cat_feature['Ship Mode'] = self.encoding_cat_feature['Ship Mode'].map({'First Class': 1, 'Same Day' : 2, 'Second Class' : 3, 'Standard Class' : 4})
             self.encoding_cat_feature['Segment'] = self.encoding_cat_feature['Segment'].map({'Consumer' : 1, 'Corporate' : 2, 'Home Office' : 3})
@@ -39,6 +45,7 @@ class FeatureEngineering:
                                                                                          'Rochester' : 144,'Rock Hill' : 145,'Rockford' : 146,'Roseville' : 147,'Sacramento' : 148,'Saint Charles' : 149,'Saint Louis' : 150,'Saint Petersburg' : 151,'San Angelo' : 152,'San Antonio' : 153,'San Bernardino' : 154,'San Diego' : 155,'San Francisco' : 156,'San Jose' : 157,'Santa Barbara' : 158,'Santa Clara' : 159,'Seattle' : 160,'Skokie' : 161,'Sparks' : 162,'Spokane' : 163, 
                                                                                          'Springfield' : 164,'Sunnyvale' : 165,'Tallahassee' : 166,'Tampa' : 167,'Texas City' : 168,'Thomasville' : 169,'Thousand Oaks' : 170,'Tigard' : 171,'Tulsa' : 172,'Tuscaloosa' : 173,'Urbandale' : 174,'Vallejo' : 175,'Virginia Beach' : 176,'Waterbury' : 177,'Waterloo' : 178,'Westfield' : 179,'Wheeling' : 180,'Wilmington' : 181,'Yuma' : 182})
             
+            self.log_writer.log(self.file_object,'End encoding categorical features...!!')
             return self.encoding_cat_feature
 
 
