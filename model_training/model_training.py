@@ -17,10 +17,16 @@ class ModelTraining:
         objfeature_selection = feature_selection.FeatureSelection()
         self.final_fetures = objfeature_selection._drop_features()
         self.file_object = open("prediction_logs/prediction_log.txt", 'a+')
+        self.error_file_object = open("error_logs/error_log.txt", 'a+')
         self.log_writer = logger.App_Logger()
 
     def model_train(self):
+        """ Method Name: model_train
+            Description: This function is doing model training, standard scalling, cross validation and building models.
+            Output: return model accuracy, ROC AUC and details.
+            On Failure: Logging exception in error log file """
         try:
+        
             X, y = self.final_fetures
             self.log_writer.log(self.file_object,'Start model training...!!')
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
@@ -128,4 +134,4 @@ class ModelTraining:
             plt.show()
 
         except Exception as ex:
-            print('error', ex)
+            self.log_writer.log(self.error_file_object, str(ex), 'Class - ' +__class__.__name__+ '')

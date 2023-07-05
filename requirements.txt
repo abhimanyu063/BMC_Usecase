@@ -1,6 +1,6 @@
-python
-pandas
+pandas == 1.4.4
 json
-scikit-learn
-matplotlib
-xgboost
+scikit-learn == 1.0.2
+matplotlib == 3.5.2
+xgboost == 1.7.6
+Flask == 1.1.2

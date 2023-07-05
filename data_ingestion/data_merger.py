@@ -10,10 +10,15 @@ class DataMerger:
         self.product_info = json_data.json_load('data/product_info.json')
         self.region_seller_info = json_data.json_load('data/region_seller_info.json')
         self.file_object = open("prediction_logs/prediction_log.txt", 'a+')
+        self.error_file_object = open("error_logs/error_log.txt", 'a+')
         self.log_writer = logger.App_Logger()
         
 
     def dataframe_merger(self):
+        """ Method Name: dataframe_merger
+            Description: This function is merging all dataframe into one dataframe.
+            Output: return filter DataFrame
+            On Failure: Logging exception in error log file """
         try:
             self.log_writer.log(self.file_object,'Start merging dataframe...!!')
             # Merging all dataframe into on dataframe.
@@ -27,4 +32,4 @@ class DataMerger:
             return filter_df
 
         except Exception as ex:
-            print('error', ex)
+            self.log_writer.log(self.error_file_object, str(ex), 'Class - ' +__class__.__name__+ '')

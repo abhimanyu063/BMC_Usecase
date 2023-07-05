@@ -10,9 +10,14 @@ class FeatureSelection:
         objfeature_engineering = feature_engineering.FeatureEngineering()
         self.final_dataFrame = objfeature_engineering._encode_categorical_columns()
         self.file_object = open("prediction_logs/prediction_log.txt", 'a+')
+        self.error_file_object = open("error_logs/error_log.txt", 'a+')
         self.log_writer = logger.App_Logger()
 
     def __split_feature(self):
+        """ Method Name: __split_feature
+            Description: This function is splitting feature into X and y for training the model.
+            Output: return X, y
+            On Failure: Logging exception in error log file """
         try:
             self.log_writer.log(self.file_object,'Start spliting features as X and y...!!')
             X = self.final_dataFrame.drop(['Returned'], axis=1)
@@ -21,9 +26,13 @@ class FeatureSelection:
             return X, y
 
         except Exception as ex:
-            print('error', ex)
+            self.log_writer.log(self.error_file_object, str(ex), 'Class - ' +__class__.__name__+ '')
 
     def __feature_seletion(self, X, y):
+        """ Method Name: __feature_seletion
+            Description: This function is selecting the important features for model building.
+            Output: return important feature in terms of plotting graph.
+            On Failure: Logging exception in error log file """
         try:
             self.log_writer.log(self.file_object,'Start features selection based on ExtraTreesClassifier...!!')
             # Model based feature selection.
@@ -47,9 +56,13 @@ class FeatureSelection:
             self.log_writer.log(self.file_object,'End features selection based on RandomForestClassifier...!!')
 
         except Exception as ex:
-            print('error', ex)
+            self.log_writer.log(self.error_file_object, str(ex), 'Class - ' +__class__.__name__+ '')
 
     def _drop_features(self):
+        """ Method Name: _drop_features
+            Description: This function is dropping the unnecessary features after using feature selection algorithms.
+            Output: return important feature in terms of X and y.
+            On Failure: Logging exception in error log file """
         try:
             X, y = self.__split_feature()
             self.__feature_seletion(X, y)
@@ -61,4 +74,4 @@ class FeatureSelection:
             return X, y
 
         except Exception as ex:
-            print('error', ex)
+            self.log_writer.log(self.error_file_object, str(ex), 'Class - ' +__class__.__name__+ '')

@@ -6,9 +6,14 @@ class FeatureEngineering:
         objDataPrepro = preprocessing.DataPreprocessing()
         self.final_dataFrame = objDataPrepro.preprocessing()
         self.file_object = open("prediction_logs/prediction_log.txt", 'a+')
+        self.error_file_object = open("error_logs/error_log.txt", 'a+')
         self.log_writer = logger.App_Logger()
 
     def __droping_feature(self):
+        """ Method Name: __droping_feature
+            Description: This function is dropping the feature which is not relevant to models.
+            Output: return DataFrame
+            On Failure: Logging exception in error log file """
         try:
             self.log_writer.log(self.file_object,'Start dropping features...!!')
             drop_cols = ['Order ID', 'Order Date', 'Ship Date', 'Customer ID',
@@ -18,9 +23,13 @@ class FeatureEngineering:
             return self.final_dataFrame
 
         except Exception as ex:
-            print('error', ex)
+            self.log_writer.log(self.error_file_object, str(ex), 'Class - ' +__class__.__name__+ '')
 
     def _encode_categorical_columns(self):
+        """ Method Name: _encode_categorical_columns
+            Description: This function is doing categorical imputation.
+            Output: return DataFrame
+            On Failure: Logging exception in error log file """
         try:
             self.log_writer.log(self.file_object,'Start encoding categorical features...!!')
             self.encoding_cat_feature = self.__droping_feature()
@@ -51,4 +60,4 @@ class FeatureEngineering:
 
 
         except Exception as ex:
-            print('error', ex)
+            self.log_writer.log(self.error_file_object, str(ex), 'Class - ' +__class__.__name__+ '')
