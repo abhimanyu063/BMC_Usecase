@@ -14,7 +14,7 @@ class DataMerger:
         self.log_writer = logger.App_Logger()
         
 
-    def dataframe_merger(self):
+    def _dataframe_merger(self):
         """ Method Name: dataframe_merger
             Description: This function is merging all dataframe into one dataframe.
             Output: return filter DataFrame
@@ -27,7 +27,7 @@ class DataMerger:
             final_df = new_df.merge(self.product_info, on = 'Product ID', how= 'left')
 
             # Filtering data based on printer and Machines
-            filter_df = final_df[(final_df['Product Name'].str.contains('Printer')) & (final_df['Sub-Category'] == 'Machines')]
+            filter_df =  final_df[final_df['Sub-Category'] == 'Machines']
             self.log_writer.log(self.file_object,'All dataframes are merged into one dataframe...!!')
             return filter_df
 

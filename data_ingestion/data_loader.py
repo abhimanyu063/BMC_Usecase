@@ -3,7 +3,6 @@ import json
 import os
 from application_logging import logger
 
-
 class Data_Getter:
     def __init__(self):
         # Handling prediction logs.
@@ -20,7 +19,6 @@ class Data_Getter:
             On Failure: Logging exception in error log file """
         try:
             self.log_writer.log(self.file_object,'Start loading json file...!!')
-            df = pd.DataFrame()
             with open(file_path, 'r+') as json_files:
                 json_data = json.load(json_files)
             
@@ -40,7 +38,7 @@ class Data_Getter:
             
             elif os.path.basename(file_path).split('/')[-1] == 'product_info.json':
                 df = pd.DataFrame(json_data['data'])
-                df.drop(columns=['index'], inplace=True)
+                df.drop(columns=['index'], axis=1, inplace=True)
                 return df
 
         except Exception as ex:

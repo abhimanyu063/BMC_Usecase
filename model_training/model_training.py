@@ -14,8 +14,6 @@ warnings.filterwarnings('ignore')
 
 class ModelTraining:
     def __init__(self):
-        objfeature_selection = feature_selection.FeatureSelection()
-        self.final_fetures = objfeature_selection._drop_features()
         self.file_object = open("prediction_logs/prediction_log.txt", 'a+')
         self.error_file_object = open("error_logs/error_log.txt", 'a+')
         self.log_writer = logger.App_Logger()
@@ -26,6 +24,8 @@ class ModelTraining:
             Output: return model accuracy, ROC AUC and details.
             On Failure: Logging exception in error log file """
         try:
+            objfeature_selection = feature_selection.FeatureSelection()
+            self.final_fetures = objfeature_selection._drop_features()
         
             X, y = self.final_fetures
             self.log_writer.log(self.file_object,'Start model training...!!')

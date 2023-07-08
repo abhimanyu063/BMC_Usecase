@@ -7,8 +7,6 @@ from application_logging import logger
 
 class FeatureSelection:
     def __init__(self):
-        objfeature_engineering = feature_engineering.FeatureEngineering()
-        self.final_dataFrame = objfeature_engineering._encode_categorical_columns()
         self.file_object = open("prediction_logs/prediction_log.txt", 'a+')
         self.error_file_object = open("error_logs/error_log.txt", 'a+')
         self.log_writer = logger.App_Logger()
@@ -19,9 +17,12 @@ class FeatureSelection:
             Output: return X, y
             On Failure: Logging exception in error log file """
         try:
+            objfeature_engineering = feature_engineering.FeatureEngineering()
+            self.final_dataFrame = objfeature_engineering._encode_categorical_columns()
+            
             self.log_writer.log(self.file_object,'Start spliting features as X and y...!!')
-            X = self.final_dataFrame.drop(['Returned'], axis=1)
-            y = self.final_dataFrame['Returned']
+            X = self.final_dataFrame.drop(['Target'], axis=1)
+            y = self.final_dataFrame['Target']
             self.log_writer.log(self.file_object,'End spliting features as X and y...!!')
             return X, y
 
@@ -62,13 +63,13 @@ class FeatureSelection:
         """ Method Name: _drop_features
             Description: This function is dropping the unnecessary features after using feature selection algorithms.
             Output: return important feature in terms of X and y.
-            On Failure: Logging exception in error log file """
+            On Failure: Logging exception in error log file."""
         try:
             X, y = self.__split_feature()
             self.__feature_seletion(X, y)
             self.log_writer.log(self.file_object,'Start feature dropping which is not relevant to model...!!')
             # Droping feature which is not important for model training.
-            drop_cols = ['Product Name', 'Sub-Category', 'Category', 'Country']
+            drop_cols = ['Sub-Category', 'Category', 'Country']
             X.drop(columns= drop_cols, axis= 1, inplace= True)
             self.log_writer.log(self.file_object,'Dropped features which is not relevant to model')
             return X, y
